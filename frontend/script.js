@@ -16,6 +16,7 @@ function setListState(state, text) {
   list.hidden = state !== 'success';
 }
 function renderApplications(applications) {
+  list.replaceChildren();
   for (const application of applications) {
     const article = document.createElement('article');
     article.className = 'application-card';
@@ -44,6 +45,7 @@ async function loadApplications() {
     const applications = await response.json();
     if (!response.ok) throw new Error(applications.error?.message || `HTTP ${response.status}`);
     if (!applications.length) {
+      list.replaceChildren();
       count.textContent = '0';
       setListState('empty', 'Заявок пока нет. Можно стать первым участником.');
       return;
